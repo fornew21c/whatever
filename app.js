@@ -190,6 +190,23 @@ function setupCardTilt() {
   });
 }
 
+function setupMenu() {
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+  if (!btn || !menu) return;
+  const toggle = (open) => {
+    const isOpen = open ?? !menu.classList.contains('is-open');
+    menu.classList.toggle('is-open', isOpen);
+    btn.classList.toggle('is-open', isOpen);
+    btn.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  };
+  btn.addEventListener('click', () => toggle());
+  menu.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') toggle(false);
+  });
+}
+
 document.getElementById('year').textContent = new Date().getFullYear();
 renderProducts();
 setupFilter();
@@ -197,3 +214,4 @@ setupOrderShortcut();
 setupForm();
 observeReveals();
 setupCardTilt();
+setupMenu();
